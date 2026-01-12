@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Search, Newspaper, TrendingUp, Globe } from "lucide-react";
+import { Menu, X, Search, TrendingUp, Globe } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,6 +13,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,10 +25,16 @@ const Navbar = () => {
           {/* LEFT: Logo & Name */}
           <div className="shrink-0 flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-primary p-1.5 rounded-lg transition-transform group-hover:rotate-12">
-                <Newspaper className="h-6 w-6 text-white" />
+              <div>
+                <Image
+                  src="/nav-logo.png"
+                  alt="news"
+                  width={200}
+                  height={250}
+                  className="w-full"
+                />
               </div>
-              <span className="text-2xl font-black tracking-tighter text-text-primary uppercase">
+              <span className="text-3xl font-bold tracking-tighter text-primary uppercase">
                 PH<span className="font-light text-slate-500">News</span>
               </span>
             </Link>
