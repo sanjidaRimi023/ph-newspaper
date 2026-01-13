@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu, X, Search, TrendingUp, Globe } from "lucide-react";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,48 +15,47 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    pathname === href ? "text-primary font-bold" : "text-text-primary";
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* LEFT: Logo & Name */}
-          <div className="shrink-0 flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div>
-                <Image
-                  src="/nav-logo.png"
-                  alt="news"
-                  width={200}
-                  height={250}
-                  className="w-full"
-                />
-              </div>
-              <span className="text-3xl font-bold tracking-tighter text-primary uppercase">
-                PH<span className="font-light text-slate-500">News</span>
-              </span>
-            </Link>
-          </div>
+    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-2xl">
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="flex h-20 items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/nav-logo.png"
+              alt="PH News"
+              width={40}
+              height={40}
+              className="h-10 w-10 object-contain"
+            />
+            <span className="text-2xl font-bold uppercase tracking-tight">
+              PH<span className="font-light text-slate-500">News</span>
+            </span>
+          </Link>
 
           <div className="hidden lg:flex flex-1 justify-center">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-text-primary font-semibold pt-6">
+                  <NavigationMenuTrigger className="font-semibold">
                     Categories
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-100 gap-3 p-4 md:w-125 md:grid-cols-2">
+                    <ul className="grid grid-cols-3 gap-2 p-4 w-100 bg-white">
                       <ListItem title="Politics" href="/politics">
                         Global and local political updates.
                       </ListItem>
                       <ListItem title="Technology" href="/tech">
-                        The latest in AI and Gadgets.
+                        The latest in AI and gadgets.
                       </ListItem>
                       <ListItem title="Sports" href="/sports">
                         Match highlights and scores.
@@ -66,28 +68,30 @@ const Navbar = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/trending">
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "text-text-primary font-semibold"
-                      )}
-                    >
-                      <TrendingUp className="w-4 h-4 mr-2" /> Trending
-                    </NavigationMenuLink>
+                  <Link
+                    href="/trending"
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      isActive("/trending"),
+                      "flex items-center gap-2"
+                    )}
+                  >
+                    <TrendingUp className="h-4 w-4" />
+                    Trending
                   </Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link href="/world">
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "text-text-primary font-semibold"
-                      )}
-                    >
-                      <Globe className="w-4 h-4 mr-2" /> World News
-                    </NavigationMenuLink>
+                  <Link
+                    href="/world"
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      isActive("/world"),
+                      "flex items-center gap-2"
+                    )}
+                  >
+                    <Globe className="h-4 w-4" />
+                    World News
                   </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -95,63 +99,41 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            <button className="p-2 text-slate-500 hover:text-text-primary transition-colors">
+            <button className="p-2 hover:text-primary">
               <Search className="h-5 w-5" />
             </button>
-            <div className="h-6 w-px bg-slate-200 mx-2" />
             <Link
               href="/subscribe"
-              className="bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 active:scale-95"
+              className="rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-white hover:bg-primary/90"
             >
               Subscribe
             </Link>
           </div>
 
-          <div className="lg:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-text-primary hover:bg-slate-100 focus:outline-none"
-            >
-              {isOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-          </div>
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2">
+            {isOpen ? <X /> : <Menu />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer */}
       {isOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 animate-in slide-in-from-top duration-300">
-          <div className="px-4 pt-2 pb-6 space-y-1 sm:px-3">
-            <Link
-              href="/politics"
-              className="block px-3 py-3 text-base font-medium text-text-primary border-b border-slate-50"
-            >
+        <div className="lg:hidden bg-white border-t">
+          <div className="space-y-1 px-4 py-4">
+            <MobileLink href="/politics" pathname={pathname}>
               Politics
-            </Link>
-            <Link
-              href="/tech"
-              className="block px-3 py-3 text-base font-medium text-text-primary border-b border-slate-50"
-            >
+            </MobileLink>
+            <MobileLink href="/tech" pathname={pathname}>
               Technology
-            </Link>
-            <Link
-              href="/trending"
-              className="block px-3 py-3 text-base font-medium text-text-primary border-b border-slate-50"
-            >
+            </MobileLink>
+            <MobileLink href="/trending" pathname={pathname}>
               Trending
+            </MobileLink>
+            <Link
+              href="/subscribe"
+              className="mt-4 flex justify-center rounded-xl bg-primary py-3 font-bold text-white"
+            >
+              Subscribe Now
             </Link>
-            <div className="pt-4">
-              <Link
-                href="/subscribe"
-                className="w-full flex justify-center bg-primary text-white py-3 rounded-xl font-bold"
-              >
-                Subscribe Now
-              </Link>
-            </div>
           </div>
         </div>
       )}
@@ -159,10 +141,9 @@ const Navbar = () => {
   );
 };
 
-// Helper Component for Navigation Content
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ComponentPropsWithoutRef<"a"> & { title: string }
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -170,20 +151,38 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 hover:text-text-primary focus:bg-slate-100 focus:text-text-primary",
+            "block rounded-md bg-white p-3 transition hover:bg-slate-100",
             className
           )}
           {...props}
         >
-          <div className="text-sm font-bold leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-slate-500">
-            {children}
-          </p>
+          <div className="text-sm font-semibold">{title}</div>
+          <p className="text-sm text-slate-500">{children}</p>
         </a>
       </NavigationMenuLink>
     </li>
   );
 });
 ListItem.displayName = "ListItem";
+
+const MobileLink = ({
+  href,
+  pathname,
+  children,
+}: {
+  href: string;
+  pathname: string;
+  children: React.ReactNode;
+}) => (
+  <Link
+    href={href}
+    className={cn(
+      "block rounded-md px-3 py-3 text-base font-medium",
+      pathname === href ? "bg-slate-100 text-primary" : "text-text-primary"
+    )}
+  >
+    {children}
+  </Link>
+);
 
 export default Navbar;
