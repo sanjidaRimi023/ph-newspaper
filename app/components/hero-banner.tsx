@@ -58,7 +58,7 @@ const HeroBanner = () => {
     setCurrent((prev) => (prev - 1 + newsData.length) % newsData.length);
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section className="px-4 py-5">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
   
         <div className="lg:col-span-7 relative overflow-hidden">

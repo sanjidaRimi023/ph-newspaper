@@ -23,7 +23,7 @@ export const NewsCard = ({
       <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
 
       <div className="absolute bottom-0 left-0 p-5 text-white space-y-2">
-        <span className="flex items-center gap-1 text-xs font-semibold uppercase text-primary bg-violet-300 w-fit px-2 py-1">
+        <span className="flex items-center gap-1 text-xs uppercase bg-primary w-fit px-2 py-1 rounded-2xl font-semibold">
           <Tag size={12} />
           {item.category}
         </span>

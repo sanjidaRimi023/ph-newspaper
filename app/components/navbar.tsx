@@ -26,8 +26,8 @@ const Navbar = () => {
     pathname === href ? "text-primary font-bold" : "text-text-primary";
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-2xl">
-      <div className="container mx-auto px-4 lg:px-8">
+    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-2xl ">
+      <div className="px-4 container mx-auto">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image
