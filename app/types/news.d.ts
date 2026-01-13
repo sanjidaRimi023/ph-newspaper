@@ -8,20 +8,6 @@ interface NewsItem {
   readTime: string;
 }
 
-// {
-//   "_id": "...",
-//   "title": "Metro Rail Update",
-//   "slug": "metro-rail-update",
-//   "category": "politics",
-//   "content": "...",
-//   "district": "dhaka",
-//   "division": "dhaka",
-//   "publishedAt": "2026-01-10T10:00:00Z",
-//   "popularity": 0,
-//   "isBreaking": true,
-//   "isFeatured": false,
-//   "coverImage": "https://..."
-// }
 
 interface NewsData {
   title: string;

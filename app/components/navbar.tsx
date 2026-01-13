@@ -69,7 +69,7 @@ const Navbar = () => {
 
                 <NavigationMenuItem>
                   <Link
-                    href="/trending"
+                    href="/news"
                     className={cn(
                       navigationMenuTriggerStyle(),
                       isActive("/trending"),
@@ -77,7 +77,7 @@ const Navbar = () => {
                     )}
                   >
                     <TrendingUp className="h-4 w-4" />
-                    Trending
+                    News
                   </Link>
                 </NavigationMenuItem>
 
