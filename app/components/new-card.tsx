@@ -3,45 +3,54 @@ import Image from "next/image";
 
 export const NewsCard = ({
   item,
+  variant,
 }: {
   item: NewsItem;
   variant: "large" | "medium";
 }) => {
+  const height = variant === "large" ? "h-[420px] lg:h-[520px]" : "h-[240px]";
+
   return (
-    <div className="relative w-full h-full">
+    <article className={`relative w-full ${height}`}>
       <Image
         src={item.image}
         alt={item.title}
         fill
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
-        priority
+        className="object-cover"
+        priority={variant === "large"}
       />
 
-      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent z-10" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
 
-      <div>
-        <div className="mb-4">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-[10px] font-bold uppercase tracking-wider">
-            <Tag size={12} />
-            {item.category}
+      <div className="absolute bottom-0 left-0 p-5 text-white space-y-2">
+        <span className="flex items-center gap-1 text-xs font-semibold uppercase text-primary bg-violet-300 w-fit px-2 py-1">
+          <Tag size={12} />
+          {item.category}
+        </span>
+
+        <h2
+          className={`font-bold leading-tight ${
+            variant === "large" ? "text-2xl lg:text-3xl" : "text-lg"
+          }`}
+        >
+          {item.title}
+        </h2>
+
+        {variant === "large" && (
+          <p className="text-sm text-slate-200 underline">{item.description}</p>
+        )}
+
+        <div className="flex gap-4 text-xs pt-1">
+          <span className="flex items-center gap-1">
+            <Calendar size={12} />
+            {item.date}
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock size={12} />
+            {item.readTime}
           </span>
         </div>
-
-        <h2>{item.title}</h2>
-
-        <p>{item.description}</p>
-
-        <div className="flex items-center gap-4 text-xs font-medium text-slate-400">
-          <div className="flex items-center gap-1.5">
-            <Calendar size={14} className="text-primary" />
-            {item.date}
-          </div>
-          <div className="flex items-center gap-1.5 border-l border-slate-700 pl-4">
-            <Clock size={14} className="text-primary" />
-            {item.readTime}
-          </div>
-        </div>
       </div>
-    </div>
+    </article>
   );
 };
