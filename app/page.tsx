@@ -1,5 +1,8 @@
+import BreakingNews from "./components/breaking-news";
 import FeatureNews from "./components/features-news";
 import HeroBanner from "./components/hero-banner";
+import NewsGrid from "./components/news-grid";
+
 
 const getFeaturedNews = async () => {
   const res = await fetch(
@@ -13,13 +16,30 @@ const getFeaturedNews = async () => {
   return res.json();
 };
 
+const getBreakingNews = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/news?limit=10`,
+    {
+      next: { revalidate: 30 },
+    }
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch breaking news");
+  return res.json();
+};
+
 export default async function HomePage() {
-  const featuredNews = await getFeaturedNews();
+  const [featuredNews, breakingNews] = await Promise.all([
+    getFeaturedNews(),
+    getBreakingNews(),
+  ]);
 
   return (
     <>
+      <BreakingNews news={breakingNews} />
       <HeroBanner />
       <FeatureNews news={featuredNews} />
+      <NewsGrid news={breakingNews}/>
     </>
   );
 }
