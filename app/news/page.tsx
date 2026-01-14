@@ -1,6 +1,6 @@
 import AllNews from "../components/all-news";
 
-const getNews = async () => {
+export const getNews = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/news?limit=20`, {
     next: { revalidate: 60 },
   });
