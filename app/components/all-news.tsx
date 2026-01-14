@@ -104,12 +104,12 @@ const AllNews = ({ news }: props) => {
               <div className="flex h-full flex-col overflow-hidden transition hover:shadow-2xl md:flex-row">
                 <div className="relative h-64 w-full overflow-hidden md:h-auto md:w-sm">
                   <Image
-                    src={item.coverImage}
-                    alt={item.title}
+                    src={item.coverImage ? item.coverImage : "/default.jpg"}
+                    alt={item.title || "Default image"}
                     fill
-                    priority={false}
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
+
                   <span className="absolute left-4 top-4 bg-primary px-4 py-1 text-[10px] font-black uppercase tracking-widest text-white">
                     {item.category}
                   </span>
