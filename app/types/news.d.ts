@@ -10,6 +10,7 @@ interface NewsItem {
 
 
 interface NewsData {
+  _id:"string"
   title: string;
   slug: string;
   category:

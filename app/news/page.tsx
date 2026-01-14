@@ -66,14 +66,15 @@ const AllNews = () => {
 
   if (loading) {
     return (
-      <div className="py-20 text-center font-semibold">
+      <div className="py-20 text-center font-semibold min-h-screen flex justify-center items-center">
+        <span className="loader "></span>
         Loading news content...
       </div>
     );
   }
 
   return (
-    <section>
+    <section className="">
       <header
         style={{ backgroundImage: "url('/bgImage.jpg')" }}
         className="relative mb-10 flex min-h-70 flex-col items-end gap-6  pb-6 bg-cover bg-no-repeat md:flex-row md:justify-between md:px-20
@@ -122,10 +123,10 @@ const AllNews = () => {
         </div>
       </header>
 
-      <div className="grid gap-8 xl:grid-cols-2 container mx-auto ">
+      <div className="grid gap-8 xl:grid-cols-2 container mx-auto">
         {currentItems.map((item) => (
           <article key={item.slug}>
-            <Link href={`/news/${item.slug}`} className="group block h-full">
+            <Link href={`/news/${item._id}`} className="group block h-full">
               <div className="flex h-full flex-col overflow-hidden transition hover:shadow-2xl md:flex-row">
                 <div className="relative h-64 w-full overflow-hidden md:h-auto md:w-sm">
                   <Image
