@@ -58,8 +58,8 @@ const HeroBanner = () => {
     setCurrent((prev) => (prev - 1 + newsData.length) % newsData.length);
 
   return (
-    <section className="px-4 py-5">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <section>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
   
         <div className="lg:col-span-7 relative overflow-hidden">
           <NewsCard item={newsData[current]} variant="large" />
@@ -81,7 +81,7 @@ const HeroBanner = () => {
         </div>
 
    
-        <div className="lg:col-span-5 flex flex-col gap-6">
+        <div className="lg:col-span-5 flex flex-col gap-10">
           <NewsCard item={newsData[1]} variant="medium" />
           <NewsCard item={newsData[2]} variant="medium" />
         </div>

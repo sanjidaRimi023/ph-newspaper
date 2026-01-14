@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Search, TrendingUp, Globe } from "lucide-react";
+import { Menu, X, Search, TrendingUp, Globe, Newspaper } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -76,7 +76,7 @@ const Navbar = () => {
                       "flex items-center gap-2"
                     )}
                   >
-                    <TrendingUp className="h-4 w-4" />
+                    <Newspaper className="h-4 w-4" />
                     News
                   </Link>
                 </NavigationMenuItem>
