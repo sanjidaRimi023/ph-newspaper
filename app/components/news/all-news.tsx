@@ -18,27 +18,33 @@ const CATEGORIES = [
 ];
 type props = {
   news: NewsData[];
+  initialCategory?: string; 
 };
 
-const AllNews = ({ news }: props) => {
-  const [category, setCategory] = useState("All");
+const AllNews = ({ news, initialCategory }: props) => {
+  const [category, setCategory] = useState(initialCategory || "All");
   const [sort, setSort] = useState<"date" | "popularity">("date");
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredNews = useMemo(() => {
-    return [...news]
-      .filter((item) =>
+
+    let newsToFilter = [...news];
+    
+    if (!initialCategory) {
+      newsToFilter = newsToFilter.filter((item) =>
         category === "All" ? true : item.category === category
-      )
-      .sort((a, b) => {
-        if (sort === "popularity") {
-          return b.popularity - a.popularity;
-        }
-        return (
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-        );
-      });
-  }, [news, category, sort]);
+      );
+    }
+    
+    return newsToFilter.sort((a, b) => {
+      if (sort === "popularity") {
+        return b.popularity - a.popularity;
+      }
+      return (
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+    });
+  }, [news, category, sort, initialCategory]);
 
   const totalPages = Math.ceil(filteredNews.length / ITEMS_PER_PAGE);
 
@@ -56,22 +62,33 @@ const AllNews = ({ news }: props) => {
       >
         <div className="absolute inset-0 bg-black/40"></div>
         <nav className="relative flex flex-wrap justify-center gap-2">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => {
-                setCategory(cat);
-                setCurrentPage(1);
-              }}
-              className={`rounded-md px-5 py-2 text-xs font-semibold uppercase tracking-wider transition ${
-                category === cat
-                  ? "bg-primary text-white"
-                  : "bg-gray-50 text-text-primary"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          {CATEGORIES.map((cat) => {
+            const isActive = initialCategory 
+              ? (cat === "All" ? !initialCategory : cat === initialCategory)
+              : category === cat;
+            
+            const href = cat === "All" ? "/news" : `/news/${cat}`;
+            
+            return (
+              <Link
+                key={cat}
+                href={href}
+                onClick={() => {
+                  if (!initialCategory) {
+                    setCategory(cat);
+                  }
+                  setCurrentPage(1);
+                }}
+                className={`rounded-md px-5 py-2 text-xs font-semibold uppercase tracking-wider transition ${
+                  isActive
+                    ? "bg-primary text-white"
+                    : "bg-gray-50 text-text-primary"
+                }`}
+              >
+                {cat}
+              </Link>
+            );
+          })}
         </nav>
         <div className="relative flex items-center gap-4 rounded-lg bg-gray-50 p-2">
           <button
@@ -98,9 +115,14 @@ const AllNews = ({ news }: props) => {
       </header>
 
       <div className="grid gap-8 xl:grid-cols-2 container mx-auto">
-        {currentItems.map((item) => (
+        {currentItems.map((item) => {
+    
+          const categoryForLink = initialCategory || item.category;
+          const newsDetailHref = `/news/${categoryForLink}/${item._id}`;
+          
+          return (
           <article key={item.slug}>
-            <Link href={`/news/${item._id}`} className="group block h-full">
+            <Link href={newsDetailHref} className="group block h-full">
               <div className="flex h-full flex-col overflow-hidden transition hover:shadow-2xl md:flex-row">
                 <div className="relative h-64 w-full overflow-hidden md:h-auto md:w-sm">
                   <Image
@@ -150,7 +172,8 @@ const AllNews = ({ news }: props) => {
               </div>
             </Link>
           </article>
-        ))}
+          );
+        })}
       </div>
 
       {totalPages > 1 && (

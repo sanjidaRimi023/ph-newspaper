@@ -1,6 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Calendar, MapPin, Clock, ArrowLeft, Eye, Hash } from "lucide-react";
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string; id: string }>;
+}) {
+  const { id } = await params;
+
+  const ogUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?id=${id}`;
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL!),
+    openGraph: {
+      title: "PH Newspaper",
+      images: [ogUrl],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [ogUrl],
+    },
+  };
+}
+
 
 async function getSingleNews(id: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/news/${id}`, {
@@ -21,15 +44,19 @@ async function getAllNews() {
 export default async function NewsDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ category: string; id: string }>;
 }) {
-  const { id } = await params;
+  const { category, id } = await params;
 
   const [currentNews, allNews]: [NewsData | null, NewsData[]] =
     await Promise.all([getSingleNews(id), getAllNews()]);
 
   if (!currentNews)
     return <div className="text-center py-20 font-bold">News not found!</div>;
+
+  if (currentNews.category !== category) {
+    redirect(`/news/${currentNews.category}/${id}`);
+  }
 
   const relatedNews = allNews.filter(
     (n) => n.category === currentNews.category && n._id !== currentNews._id
@@ -44,7 +71,7 @@ export default async function NewsDetailPage({
       <div className="bg-gray-50">
         <div className="container mx-auto px-4 pt-8">
           <Link
-            href="/news"
+            href={`/news/${category}`}
             className="flex items-center gap-2 mb-6 text-primary font-bold hover:underline"
           >
             <ArrowLeft size={18} /> BACK TO LIST
@@ -115,7 +142,7 @@ export default async function NewsDetailPage({
                 {relatedNews.map((item) => (
                   <Link
                     key={item._id}
-                    href={`/news/${item._id}`}
+                    href={`/news/${item.category}/${item._id}`}
                     className="block"
                   >
                     <div className="flex gap-4 p-3 rounded-none transition-all duration-300 hover:shadow-xl border border-gray-100 group">
@@ -158,7 +185,7 @@ export default async function NewsDetailPage({
               {otherCategoryNews.map((item) => (
                 <Link
                   key={item._id}
-                  href={`/news/${item._id}`}
+                  href={`/news/${item.category}/${item._id}`}
                   className="group"
                 >
                   <div className="bg-white border border-gray-200 shadow hover:shadow-2xl p-4 h-full transition hover:border-primary">

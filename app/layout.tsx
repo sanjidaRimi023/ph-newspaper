@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   description: "Newspaper related website",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{

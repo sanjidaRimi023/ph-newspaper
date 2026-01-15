@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Search, Globe, Newspaper } from "lucide-react";
+import { Menu, X, Search, Globe, Newspaper, CheckCircle2 } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -20,14 +20,40 @@ import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const pathname = usePathname();
+
+  const handleSubscribe = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowToast(true);
+  };
+
+  useEffect(() => {
+    if (showToast) {
+      const timer = setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showToast]);
 
   const isActive = (href: string) =>
     pathname === href ? "text-primary font-bold" : "text-text-primary";
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-2xl ">
-      <div className="px-4 container mx-auto">
+    <>
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-10 animate-slide-down">
+          <div className="bg-success text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-2 font-semibold">
+            <CheckCircle2 className="h-5 w-5" />
+            <span>Thanks for subscribing!</span>
+          </div>
+        </div>
+      )}
+      
+      <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-2xl ">
+        <div className="px-4 container mx-auto">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <Image
@@ -51,16 +77,16 @@ const Navbar = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid grid-cols-3 gap-2 p-4 w-100 bg-white">
-                      <ListItem title="Politics" href="/politics">
+                      <ListItem title="Politics" href="/news/politics">
                         Global and local political updates.
                       </ListItem>
-                      <ListItem title="Technology" href="/tech">
+                      <ListItem title="Technology" href="/news/technology">
                         The latest in AI and gadgets.
                       </ListItem>
-                      <ListItem title="Sports" href="/sports">
+                      <ListItem title="Sports" href="/news/sports">
                         Match highlights and scores.
                       </ListItem>
-                      <ListItem title="Business" href="/business">
+                      <ListItem title="Business" href="/news/business">
                         Market trends and economy.
                       </ListItem>
                     </ul>
@@ -102,12 +128,12 @@ const Navbar = () => {
             <button className="p-2 hover:text-primary">
               <Search className="h-5 w-5" />
             </button>
-            <Link
-              href="/subscribe"
+            <button
+              onClick={handleSubscribe}
               className="rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-white hover:bg-primary/90"
             >
               Subscribe
-            </Link>
+            </button>
           </div>
 
           <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2">
@@ -128,16 +154,17 @@ const Navbar = () => {
             <MobileLink href="/trending" pathname={pathname}>
               Trending
             </MobileLink>
-            <Link
-              href="/subscribe"
-              className="mt-4 flex justify-center rounded-xl bg-primary py-3 font-bold text-white"
+            <button
+              onClick={handleSubscribe}
+              className="mt-4 w-full flex justify-center rounded-xl bg-primary py-3 font-bold text-white"
             >
               Subscribe Now
-            </Link>
+            </button>
           </div>
         </div>
       )}
     </nav>
+    </>
   );
 };
 

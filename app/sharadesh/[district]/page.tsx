@@ -1,4 +1,3 @@
-// app/sharadesh/[district]/page.tsx
 import { getDB } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
@@ -24,15 +23,21 @@ async function getDistrictName(id: string) {
 }
 
 async function getDistrictNews(districtName: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/news/by-district?district=${districtName}`,
-    { cache: "no-store" }
-  );
-  return res.json();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/news/by-district?district=${districtName}`,
+      { cache: "no-store" }
+    );
+    if (!res.ok) throw new Error("Failed to fetch district news");
+    return await res.json();
+  } catch (err) {
+    console.error("District news fetch error:", err);
+    return [];
+  }
 }
 
 export default async function DistrictPage({ params }: Props) {
-  const { district: districtId } = await params; // unwrap the Promise
+  const { district: districtId } = await params; 
   const districtName = await getDistrictName(districtId);
   const news: NewsData[] = await getDistrictNews(districtName);
 
