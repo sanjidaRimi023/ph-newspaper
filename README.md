@@ -3,7 +3,7 @@
 PH Newspaper is a modern, web-based news platform that provides an interactive, map-driven experience for exploring news across Bangladesh. Users can navigate news through traditional categories or via an interactive geographical map.
 
 ## 🚀 Live Demo
-[Insert Live Link Here]
+[live link](https://ph-newspaper-ecru.vercel.app/)
 
 ## ✨ Features
 
