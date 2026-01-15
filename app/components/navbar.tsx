@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, Search, TrendingUp, Globe, Newspaper } from "lucide-react";
+import { Menu, X, Search, Globe, Newspaper } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -83,7 +83,7 @@ const Navbar = () => {
 
                 <NavigationMenuItem>
                   <Link
-                    href="/world"
+                    href="/sharadesh"
                     className={cn(
                       navigationMenuTriggerStyle(),
                       isActive("/world"),
@@ -91,7 +91,7 @@ const Navbar = () => {
                     )}
                   >
                     <Globe className="h-4 w-4" />
-                    World News
+                    SharaDesh
                   </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>

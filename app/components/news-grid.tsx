@@ -32,14 +32,14 @@ const NewsHeroGrid = ({ news }: Props) => {
           {sideNews.map((item) => (
             <Link
               key={item._id}
-              href={`/news/${item.slug}`}
+              href={`/news/${item._id}`}
               className="flex-1 group relative overflow-hidden bg-primary min-h-37"
             >
               <Image
                 fill
                 src={
                   item.coverImage ||
-                  "https://images.unsplash.com/photo-1504711432869-9d997361c594?w=500"
+                  "/default.jpg"
                 }
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 alt={item.title}
