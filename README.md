@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PH Newspaper 🗞️
 
-## Getting Started
+PH Newspaper is a modern, web-based news platform that provides an interactive, map-driven experience for exploring news across Bangladesh. Users can navigate news through traditional categories or via an interactive geographical map.
 
-First, run the development server:
+## 🚀 Live Demo
+[Insert Live Link Here]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+### 📰 Core Newspaper Features
+- **Dynamic Home Page:** Showcases breaking news, featured headlines, and the latest news feed.
+- **Category-based Navigation:** Filter news by categories (National, International, Sports, etc.) from the navbar.
+- **Advanced Filtering & Sorting:** Sort news articles by date or popularity.
+- **News Detail Page:** Deep dive into articles with related news suggestions and auto-incrementing popularity views.
+- **Pagination:** Smooth navigation with a 10-article per page limit on category pages.
+
+### 🗺️ "Sara Desh" (Interactive Map)
+- **Interactive Map Interface:** A fully functional map of Bangladesh with zoom and pan support.
+- **District Markers:** Highlights districts that have active news stories.
+- **Quick Preview:** Click on a marker to see news articles in a popup/modal without leaving the map.
+- **District Search:** Search for specific districts with an autocomplete suggestion feature.
+- **District Detail Page:** View district-specific statistics (charts) and a filtered list of news.
+
+### 🛠️ Technical Highlights
+- **SEO Optimized:** Meta tags and Open Graph (OG) images for better social media sharing.
+- **Production Ready:** Optimized images using Next.js `next/image` and custom 404 error handling.
+- **Database:** MongoDB for efficient data storage and retrieval.
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 14+ (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** MongoDB
+- **Map Library:** (e.g., Leaflet.js / Mapbox / React-simple-maps)
+- **Charts:** (e.g., Recharts / Chart.js)
+
+## 📁 Project Structure (App Router)
+
+```text
+├── app/
+│   ├── api/              # Backend API routes (Districts, News)
+│   ├── news/             # Category and News Detail routes
+│   ├── saradesh/         # Map and District Detail routes
+│   └── components/       # Reusable UI components (Navbar, Footer, Hero)
+├── public/               # Static assets & Favicon
+└── types/                # TypeScript interfaces
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚙️ Installation & Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+```bash
+git clone [https://github.com/your-username/ph-newspaper.git](https://github.com/your-username/ph-newspaper.git)
+cd ph-newspaper
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies:**
+```bash
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+3. **Environment Variables:**
+Create a `.env.local` file in the root directory and add your MongoDB URI:
+```env
+MONGODB_URI=your_mongodb_connection_string
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+4. **Run the development server:**
+```bash
+npm run dev
+
+```
+
+
+Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) to see the result.
+
+## 📸 Screenshots
+
+| Home Page | Interactive Map |
+| --- | --- |
+|  |  |
+
+---
+
+Developed by Me
+
+```
+
+---
