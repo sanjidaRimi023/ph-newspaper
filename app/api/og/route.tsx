@@ -8,13 +8,19 @@ const size = {
 };
 
 async function getSingleNews(id: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/news/${id}`,
-    { cache: "no-store" }
-  );
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(
+      `${baseUrl}/api/news/${id}`,
+      { cache: "no-store" }
+    );
 
-  if (!res.ok) return null;
-  return res.json();
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    console.error("getSingleNews error in OG route:", err);
+    return null;
+  }
 }
 
 export async function GET(req: Request) {

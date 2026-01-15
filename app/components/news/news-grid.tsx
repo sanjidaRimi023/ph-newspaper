@@ -32,7 +32,7 @@ const NewsHeroGrid = ({ news }: Props) => {
           {sideNews.map((item) => (
             <Link
               key={item._id}
-              href={`/news/${item._id}`}
+              href={`/news/${item.category}/${item._id}`}
               className="flex-1 group relative overflow-hidden bg-primary min-h-37"
             >
               <Image
@@ -54,7 +54,7 @@ const NewsHeroGrid = ({ news }: Props) => {
         </div>
         {mainNews && (
           <Link
-            href={`/news/${mainNews._id}`}
+            href={`/news/${mainNews.category}/${mainNews._id}`}
             className="lg:col-span-8 group relative overflow-hidden bg-primary h-75 md:h-120"
           >
             <Image
@@ -82,7 +82,7 @@ const NewsHeroGrid = ({ news }: Props) => {
         {bottomNews.map((item) => (
           <Link
             key={item._id}
-            href={`/news/${item._id}`}
+          href={`/news/${item.category}/${item._id}`}
             className="group bg-white border-border border p-4 shadow hover:shadow-xl"
           >
             <div className="relative h-44 overflow-hidden mb-3">

@@ -4,16 +4,8 @@ import { Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-type News = {
-  _id: string;
-  title: string;
-  slug: string;
-  district: string;
-  publishedAt: Date;
-  coverImage: string;
-};
 type Props = {
-  newsData: News[];
+  newsData: NewsData[];
   current: number;
 };
 
@@ -41,7 +33,7 @@ const FeaturedSlider = ({ newsData, current }: Props) => {
                   <span>{new Date(news.publishedAt).toLocaleDateString()}</span>
                   <span>{news.district}</span>
                   <Link
-                    href={`/news/${news._id}`}
+                    href={`/news/${news.category}/${news._id}`}
                     className="absolute top-10 right-3 h-9 w-9 flex items-center justify-center border hover:border-white text-white rounded-full
                              transition-colors duration-300
                              bg-primary border-primary"

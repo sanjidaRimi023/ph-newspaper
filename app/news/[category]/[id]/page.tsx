@@ -9,10 +9,11 @@ export async function generateMetadata({
 }) {
   const { id } = await params;
 
-  const ogUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/og?id=${id}`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const ogUrl = `${baseUrl}/api/og?id=${id}`;
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL!),
+    metadataBase: new URL(baseUrl),
     openGraph: {
       title: "PH Newspaper",
       images: [ogUrl],
@@ -26,19 +27,31 @@ export async function generateMetadata({
 
 
 async function getSingleNews(id: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/news/${id}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
-  return res.json();
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/news/${id}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    console.error("getSingleNews error:", err);
+    return null;
+  }
 }
 
 async function getAllNews() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/news?limit=30`, {
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) return [];
-  return res.json();
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/news?limit=30`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    console.error("getAllNews error:", err);
+    return [];
+  }
 }
 
 export default async function NewsDetailPage({

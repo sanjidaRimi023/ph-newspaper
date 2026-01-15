@@ -24,7 +24,7 @@ const BreakingNews = ({ news }: Props) => {
           {[...news, ...news].map((item, idx) => (
             <Link
               key={`${item._id}-${idx}`}
-              href={`/news/${item.slug}`}
+              href={`/news/${item.category}/${item._id}`}
               className="flex items-center gap-2 text-sm text-gray-100 transition-colors group"
             >
               <span className="text-primary font-bold">•</span>

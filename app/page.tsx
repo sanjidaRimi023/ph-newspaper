@@ -5,8 +5,9 @@ import NewsHeroGrid from "./components/news/news-grid";
 
 const getFeaturedNews = async () => {
   try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/news?sort=popularity&limit=10`,
+      `${baseUrl}/api/news?sort=popularity&limit=10`,
       { next: { revalidate: 60 } }
     );
     if (!res.ok) throw new Error("Failed to fetch featured news");
@@ -19,8 +20,9 @@ const getFeaturedNews = async () => {
 
 const getBreakingNews = async () => {
   try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/news?limit=10`,
+      `${baseUrl}/api/news?limit=10`,
       { next: { revalidate: 30 } }
     );
     if (!res.ok) throw new Error("Failed to fetch breaking news");

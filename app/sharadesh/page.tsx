@@ -1,15 +1,21 @@
 import MapWrapper from "./MapWrapper"
 
 async function getDistricts() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/districts`, {
-    cache: "no-store",
-  })
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/districts`, {
+      cache: "no-store",
+    })
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch districts")
+    if (!res.ok) {
+      throw new Error("Failed to fetch districts")
+    }
+
+    return await res.json()
+  } catch (err) {
+    console.error("getDistricts error:", err);
+    return [];
   }
-
-  return res.json()
 }
 
 export default async function SaraDeshPage() {
