@@ -24,7 +24,7 @@ const Footer = () => {
               href="/"
               className="text-3xl font-black tracking-tighter uppercase"
             >
-              PH<span className="text-primary">NEWS</span>
+              PH<span className="text-text-muted font-thin">NEWS</span>
             </Link>
             <p className="text-gray-300 text-sm leading-relaxed max-w-sm mx-auto md:mx-0">
             Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution.

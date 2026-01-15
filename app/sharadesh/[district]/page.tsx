@@ -9,9 +9,6 @@ type Props = {
   params: Promise<{ district: string }>;
 };
 
-// --------------------
-// District details
-// --------------------
 async function getDistrictDetails(id: string) {
   try {
     const db = await getDB();
@@ -22,9 +19,7 @@ async function getDistrictDetails(id: string) {
   }
 }
 
-// --------------------
-// District news
-// --------------------
+
 async function getDistrictNews(districtName: string): Promise<NewsData[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -42,9 +37,7 @@ async function getDistrictNews(districtName: string): Promise<NewsData[]> {
   }
 }
 
-// --------------------
-// Metadata
-// --------------------
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { district: districtId } = await params;
   const district = await getDistrictDetails(districtId);
@@ -68,9 +61,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// --------------------
-// Page
-// --------------------
+
 export default async function DistrictPage({ params }: Props) {
   const { district: districtId } = await params;
   const district = await getDistrictDetails(districtId);
