@@ -13,7 +13,7 @@ type District = {
 }
 
 const icon = new L.Icon({
-  iconUrl: "/marker-icon.png",
+  iconUrl: "/markericon.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
 })
@@ -21,7 +21,7 @@ const icon = new L.Icon({
 export default function Map({ districts }: { districts: District[] }) {
   return (
     <MapContainer
-      center={[23.685, 90.3563]} // Bangladesh center
+      center={[23.685, 90.3563]}
       zoom={7}
       className="h-150 w-full"
     >
@@ -35,8 +35,8 @@ export default function Map({ districts }: { districts: District[] }) {
           <Popup>
             <h3 className="font-semibold">{d.name}</h3>
             <p>{d.division}</p>
-            <Link href={`/saradesh/${d.name.toLowerCase()}`}>
-              View News →
+            <Link href={`/saradesh/${d._id.toLowerCase()}`}>
+              View News
             </Link>
           </Popup>
         </Marker>

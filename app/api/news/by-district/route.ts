@@ -18,7 +18,9 @@ export async function GET(req: Request) {
 
   const db = await getDB()
 
-  const query: Filter<NewsData> = { district }
+  const query: Filter<NewsData> = {  district: {
+    $regex: new RegExp(`^${district}$`, "i"),
+  },}
 
   if (category) {
     query.category = category as NewsData["category"]

@@ -1,20 +1,18 @@
-// app/saradesh/[district]/page.tsx
 type Props = {
-  params: { district: string }
-}
-
+  params: { district: string };
+};
 
 async function getDistrictNews(district: string) {
   const res = await fetch(
-    `${process.env.BASE_URL}/api/news/by-district?district=${district}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/news/by-district?district=${district}`,
     { cache: "no-store" }
-  )
-  return res.json()
+  );
+  return res.json();
 }
 
 export default async function DistrictPage({ params }: Props) {
-  const news = await getDistrictNews(params.district)
-
+  const news = await getDistrictNews(params.district);
+console.log(news);
   return (
     <div className="container mx-auto">
       <h1 className="text-xl font-semibold mb-4">
@@ -30,5 +28,5 @@ export default async function DistrictPage({ params }: Props) {
         ))}
       </ul>
     </div>
-  )
+  );
 }
