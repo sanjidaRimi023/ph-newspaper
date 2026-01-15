@@ -1,32 +1,57 @@
+// app/sharadesh/[district]/page.tsx
+import { getDB } from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
+
 type Props = {
-  params: { district: string };
+  params: Promise<{ district: string }>;
 };
 
-async function getDistrictNews(district: string) {
+type NewsData = {
+  _id: string;
+  title: string;
+  category: string;
+  district: string;
+  publishedAt: string;
+  popularity: number;
+};
+
+async function getDistrictName(id: string) {
+  const db = await getDB();
+  const districtDoc = await db
+    .collection("districts")
+    .findOne({ _id: new ObjectId(id) });
+  return districtDoc?.name || "Unknown District";
+}
+
+async function getDistrictNews(districtName: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/news/by-district?district=${district}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/news/by-district?district=${districtName}`,
     { cache: "no-store" }
   );
   return res.json();
 }
 
 export default async function DistrictPage({ params }: Props) {
-  const news = await getDistrictNews(params.district);
-console.log(news);
+  const { district: districtId } = await params; // unwrap the Promise
+  const districtName = await getDistrictName(districtId);
+  const news: NewsData[] = await getDistrictNews(districtName);
+
   return (
     <div className="container mx-auto">
-      <h1 className="text-xl font-semibold mb-4">
-        News from {params.district}
-      </h1>
+      <h1 className="text-xl font-semibold mb-4">News from {districtName}</h1>
 
-      <ul className="space-y-3">
-        {news.map((n: NewsData) => (
-          <li key={n._id} className="border p-3 rounded">
-            <h2 className="font-medium">{n.title}</h2>
-            <p className="text-sm text-gray-500">{n.category}</p>
-          </li>
-        ))}
-      </ul>
+      {news.length === 0 ? (
+        <p className="text-gray-500">No news found for this district.</p>
+      ) : (
+        <ul className="space-y-3">
+          {news.map((n) => (
+            <li key={n._id} className="border p-3 rounded">
+              <h2 className="font-medium">{n.title}</h2>
+              <p className="text-sm text-gray-500">{n.category}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

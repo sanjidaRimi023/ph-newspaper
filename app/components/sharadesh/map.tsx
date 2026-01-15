@@ -35,7 +35,7 @@ export default function Map({ districts }: { districts: District[] }) {
           <Popup>
             <h3 className="font-semibold">{d.name}</h3>
             <p>{d.division}</p>
-            <Link href={`/saradesh/${d._id.toLowerCase()}`}>
+            <Link href={`/sharadesh/${d._id.toLowerCase()}`}>
               View News
             </Link>
           </Popup>
