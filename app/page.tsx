@@ -1,7 +1,8 @@
 import BreakingNews from "./components/breaking-news";
 import FeatureNews from "./components/features-news";
 import HeroBanner from "./components/hero-banner";
-import NewsGrid from "./components/news-grid";
+import NewsHeroGrid from "./components/news/news-grid";
+
 
 
 const getFeaturedNews = async () => {
@@ -39,7 +40,7 @@ export default async function HomePage() {
       <BreakingNews news={breakingNews} />
       <HeroBanner />
       <FeatureNews news={featuredNews} />
-      <NewsGrid news={breakingNews}/>
+      <NewsHeroGrid news={breakingNews}/>
     </>
   );
 }

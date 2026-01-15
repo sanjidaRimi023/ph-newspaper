@@ -1,4 +1,5 @@
-import AllNews from "../components/all-news";
+import AllNews from "../components/news/all-news";
+
 
 export const getNews = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/news?limit=40`, {

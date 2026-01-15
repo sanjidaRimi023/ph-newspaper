@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   const page = Number(searchParams.get("page") || 1)
   const sort = searchParams.get("sort") || "date"
 
-const limit = Number(searchParams.get("limit") || 10);
+const limit = Number(searchParams.get("limit") || 20);
 
   const skip = (page - 1) * limit
 

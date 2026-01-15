@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { NewsCard } from "./new-card";
+import { NewsCard } from "./news/new-card";
 
 
 const newsData: NewsItem[] = [
